@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
-const apiURL = 'https://covid19.mathdro.id/api';
+const apiURL: string = 'https://covid19.mathdro.id/api';
 
 interface DataSourceNode {
   confirmed: {
-    value: Number;
-    detail: String;
+    value: number;
+    detail: string;
   };
   recovered: {
-    value: Number;
-    detail: String;
+    value: number;
+    detail: string;
   };
   deaths: {
-    value: Number;
-    detail: String;
+    value: number;
+    detail: string;
   };
-  dailySummary: String;
-  dailyTimeSeries: {
-    pattern: String;
-    example: String;
-  };
-  image: String;
-  source: String;
-  countries: String;
-  countryDetail: {
-    pattern: String;
-    example: String;
-  };
-  lastUpdate: String;
+  lastUpdate: string;
 };
 
 const App: React.FC = () => {
