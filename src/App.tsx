@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Grid,
+  Cell,
   Layout,
   Header,
   Drawer,
@@ -44,6 +46,7 @@ const App: React.FC = () => {
       })
 
     getGraphData(state);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getDataSource = async () => {
@@ -95,41 +98,47 @@ const App: React.FC = () => {
           <div>
             {dataSource &&
               <>
-                <div>
-                  Confirmed: {dataSource.confirmed.value}
-                </div>
-                <div>
-                  Recovered: {dataSource.recovered.value}
-                </div>
-                <div>
-                  Deaths: {dataSource.deaths.value}
-                </div>
-                <div>
-                  Last update: {dataSource.lastUpdate}
-                </div>
+                <h4>Worldwide</h4>
+                <Grid>
+                  <Cell col={3}>
+                    Confirmed: {dataSource.confirmed.value}
+                  </Cell>
+                  <Cell col={3}>
+                    Recovered: {dataSource.recovered.value}
+                  </Cell>
+                  <Cell col={3}>
+                    Deaths: {dataSource.deaths.value}
+                  </Cell>
+                  <Cell col={3}>
+                    Last update: {dataSource.lastUpdate}
+                  </Cell>
+                </Grid>
               </>
             }
-            <SelectField
-              id="country"
-              value={state.country}
-              options={countries}
-              handleChange={handleChange}
-            />
-            <SelectField
-              id="status"
-              value={state.status}
-              options={[
-                { data: 'all', label: 'All' },
-                { data: 'confirmed', label: 'Confirmed' },
-                { data: 'recovered', label: 'Recovered' },
-                { data: 'deaths', label: 'Deaths' },
-              ]}
-              handleChange={handleChange}
-            />
-            <SimpleBarChart
-              data={graphList}
-              state={state}
-            />
+            <div>
+              <h4>By Country</h4>
+              <SelectField
+                id="country"
+                value={state.country}
+                options={countries}
+                handleChange={handleChange}
+              />
+              <SelectField
+                id="status"
+                value={state.status}
+                options={[
+                  { data: 'all', label: 'All' },
+                  { data: 'confirmed', label: 'Confirmed' },
+                  { data: 'recovered', label: 'Recovered' },
+                  { data: 'deaths', label: 'Deaths' },
+                ]}
+                handleChange={handleChange}
+              />
+              <SimpleBarChart
+                data={graphList}
+                state={state}
+              />
+            </div>
           </div>
         </Content>
       </Layout>

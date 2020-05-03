@@ -20,8 +20,8 @@ const SimpleBarChart: React.FC<Props> = ({ data, state }) => {
   return (
     <div style={{ overflow: 'auto' }}>
       <BarChart
-        width={200 * dataProvider.length}
-        height={400}
+        width={300 * dataProvider.length}
+        height={500}
         data={dataProvider}
         margin={{
           top: 5, right: 30, left: 20, bottom: 5,
