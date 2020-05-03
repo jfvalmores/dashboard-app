@@ -20,8 +20,8 @@ const App: React.FC = () => {
   const [countries, setCountries] = useState<Array<OptionNode>>([]);
   const [graphList, setGraphList] = useState<Array<Object>>([]);
   const [state, setState] = useState<StateNode>({
-    country: 'PH',
-    status: 'confirmed'
+    country: 'PHL',
+    status: 'all'
   });
 
   useEffect(() => {
@@ -43,28 +43,29 @@ const App: React.FC = () => {
         setCountries(dataProvider);
       })
 
-    getGraphData()
-      .then((data: any) => {
-        setGraphList(data)
-      })
+    getGraphData(state);
   }, [])
 
-  const getDataSource = async (): Promise<Object> => {
+  const getDataSource = async () => {
     const response = await fetch(apiURL);
     return await response.json();
   }
 
-  const getCountries = async (): Promise<Object> => {
+  const getCountries = async () => {
     const response = await fetch(`${apiURL}/countries`);
     return await response.json();
   }
 
-  const getGraphData = async (): Promise<Object> => {
-    const response = await fetch(`${apiURL}/countries/${state.country}/${state.status}`);
-    return await response.json();
+  const getGraphData = async (stateData?: StateNode) => {
+    if (stateData) {
+      const stats = stateData.status === 'all' ? 'confirmed' : stateData.status;
+      const response = await fetch(`${apiURL}/countries/${stateData.country}/${stats}`);
+      const data = await response.json();
+      setGraphList(data);
+    }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: any) => {
     const { id, value } = e.target;
     setState(prevState => {
       const nextState = {
@@ -72,7 +73,7 @@ const App: React.FC = () => {
         [id]: value,
       };
 
-      getGraphData();
+      getGraphData(nextState);
       return nextState;
     });
   }
@@ -90,7 +91,7 @@ const App: React.FC = () => {
             <a href="#">Link</a>
           </Navigation>
         </Drawer>
-        <Content>
+        <Content style={{ padding: 10 }}>
           <div>
             {dataSource &&
               <>
@@ -118,13 +119,17 @@ const App: React.FC = () => {
               id="status"
               value={state.status}
               options={[
+                { data: 'all', label: 'All' },
                 { data: 'confirmed', label: 'Confirmed' },
                 { data: 'recovered', label: 'Recovered' },
                 { data: 'deaths', label: 'Deaths' },
               ]}
               handleChange={handleChange}
             />
-            <SimpleBarChart data={graphList} />
+            <SimpleBarChart
+              data={graphList}
+              state={state}
+            />
           </div>
         </Content>
       </Layout>

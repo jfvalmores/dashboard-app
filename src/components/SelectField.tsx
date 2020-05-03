@@ -17,6 +17,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
       <select
         id={id}
         ref={selectRef}
+        value={value}
         onChange={handleChange}
       >
         {options && options.map((option, i) => (
