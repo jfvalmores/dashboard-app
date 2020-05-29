@@ -95,25 +95,23 @@ const App: React.FC = () => {
           </Navigation>
         </Drawer>
         <Content style={{ padding: 10 }}>
-          <div>
+          <div style={{ display: 'flex' }}>
             {dataSource &&
-              <>
+              <div>
                 <h4>Worldwide</h4>
-                <Grid>
-                  <Cell col={3}>
-                    Confirmed: {dataSource.confirmed.value}
-                  </Cell>
-                  <Cell col={3}>
-                    Recovered: {dataSource.recovered.value}
-                  </Cell>
-                  <Cell col={3}>
-                    Deaths: {dataSource.deaths.value}
-                  </Cell>
-                  <Cell col={3}>
-                    Last update: {dataSource.lastUpdate}
-                  </Cell>
-                </Grid>
-              </>
+                <div>
+                  Confirmed: {dataSource.confirmed.value}
+                </div>
+                <div>
+                  Recovered: {dataSource.recovered.value}
+                </div>
+                <div>
+                  Deaths: {dataSource.deaths.value}
+                </div>
+                <div>
+                  Last update: {dataSource.lastUpdate}
+                </div>
+              </div>
             }
             <div>
               <h4>By Country</h4>
